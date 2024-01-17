@@ -34,11 +34,47 @@ namespace SarastyaTech
             txtUsername.Location = new System.Drawing.Point(150, 50);
             this.Controls.Add(txtUsername);
 
+            // Add a label for nama
+            Label lblNama = new Label();
+            lblNama.Text = "Nama:";
+            lblNama.Width = 50;
+            lblNama.Location = new System.Drawing.Point(50, 80);
+            this.Controls.Add(lblNama);
+
+            // Add a textbox for editing username
+            TextBox txtNama = new TextBox();
+            txtNama.Location = new System.Drawing.Point(150, 80);
+            this.Controls.Add(txtNama);
+
+            // Add a label for nama
+            Label lblKelas = new Label();
+            lblKelas.Text = "Kelas:";
+            lblKelas.Width = 50;
+            lblKelas.Location = new System.Drawing.Point(50, 110);
+            this.Controls.Add(lblKelas);
+
+            // Add a textbox for editing username
+            TextBox txtKelas = new TextBox();
+            txtKelas.Location = new System.Drawing.Point(150, 110);
+            this.Controls.Add(txtKelas);
+
+            // Add a label for nama
+            Label lblProgli = new Label();
+            lblProgli.Text = "Progli:";
+            lblProgli.Width = 50;
+            lblProgli.Location = new System.Drawing.Point(50, 140);
+            this.Controls.Add(lblProgli);
+
+            // Add a textbox for editing username
+            TextBox txtProgli = new TextBox();
+            txtProgli.Location = new System.Drawing.Point(150, 140);
+            this.Controls.Add(txtProgli);
+
             // Add a button for saving changes
             Button btnSaveChanges = new Button();
             btnSaveChanges.Text = "Save Changes";
-            btnSaveChanges.Location = new System.Drawing.Point(150, 80);
-            btnSaveChanges.Click += (s, ev) => SaveChanges(txtUsername.Text);
+            btnSaveChanges.Location = new System.Drawing.Point(150, 170);
+            btnSaveChanges.Click += (s, ev) => SaveChanges(txtUsername.Text, txtNama.Text, txtKelas.Text, txtProgli.Text);
             this.Controls.Add(btnSaveChanges);
         }
 
@@ -59,6 +95,9 @@ namespace SarastyaTech
                         {
                             // Load user data into the form controls
                             ((TextBox)this.Controls[1]).Text = reader["username"].ToString();
+                            ((TextBox)this.Controls[3]).Text = reader["nama"].ToString();
+                            ((TextBox)this.Controls[5]).Text = reader["kelas"].ToString();
+                            ((TextBox)this.Controls[7]).Text = reader["progli"].ToString();
                         }
                         else
                         {
@@ -70,7 +109,7 @@ namespace SarastyaTech
             }
         }
 
-        private void SaveChanges(string newUsername)
+        private void SaveChanges(string newUsername, string newNama, string newKelas, string newProgli)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
@@ -78,8 +117,11 @@ namespace SarastyaTech
                 using (NpgsqlCommand command = new NpgsqlCommand())
                 {
                     command.Connection = connection;
-                    command.CommandText = "UPDATE users SET username = @newUsername WHERE user_id = @userId";
+                    command.CommandText = "UPDATE users SET username = @newUsername, nama = @newNama, kelas = @newKelas, progli = @newProgli WHERE user_id = @userId";
                     command.Parameters.AddWithValue("@newUsername", newUsername);
+                    command.Parameters.AddWithValue("@newNama", newNama);
+                    command.Parameters.AddWithValue("@newKelas", newKelas);
+                    command.Parameters.AddWithValue("@newProgli", newProgli);
                     command.Parameters.AddWithValue("@userId", userId);
 
                     command.ExecuteNonQuery();
@@ -88,6 +130,11 @@ namespace SarastyaTech
                     this.Close(); // Close the EditUserForm after saving changes
                 }
             }
+        }
+
+        private void EditUserForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

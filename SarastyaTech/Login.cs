@@ -17,7 +17,7 @@ namespace SarastyaTech
 
         private void InitializeUI()
         {
-            // Add labels
+   
             Label lblUsername = new Label();
             lblUsername.Text = "Username:";
             lblUsername.Location = new System.Drawing.Point(50, 50);
@@ -28,17 +28,15 @@ namespace SarastyaTech
             lblPassword.Location = new System.Drawing.Point(50, 80);
             this.Controls.Add(lblPassword);
 
-            // Add textboxes
             TextBox txtUsername = new TextBox();
             txtUsername.Location = new System.Drawing.Point(150, 50);
             this.Controls.Add(txtUsername);
 
             TextBox txtPassword = new TextBox();
             txtPassword.Location = new System.Drawing.Point(150, 80);
-            txtPassword.PasswordChar = '*'; // Mask the password
+            txtPassword.PasswordChar = '*'; 
             this.Controls.Add(txtPassword);
 
-            // Add a button for login
             Button btnLogin = new Button();
             btnLogin.Text = "Login";
             btnLogin.Location = new System.Drawing.Point(150, 110);
